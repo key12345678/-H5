@@ -188,7 +188,7 @@ export default {
             }
             this.currentDate = year+'-'+month
             const st = this.currentDate.replace(/-/g,"/");
-            this.currentDateFormat = Date.parse(st)
+            // this.currentDateFormat = Date.parse(st) //???????
             this.Year = year;
             this.Month = month;
             this.Draw(this.Year, this.Month);

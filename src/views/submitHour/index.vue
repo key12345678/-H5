@@ -15,7 +15,7 @@
                 <span>{{formatWeekDay_(weekDay)}}</span>
             </div>
             <div class="add">
-                <van-icon name="add" color="#3B82FF" size="26px"/>
+                <van-icon name="add" color="#3B82FF" size="26px" @click="goFillInHour"/>
             </div>
         </div>
         <div class="itemList">
@@ -89,6 +89,7 @@ export default {
             weekDay: 0,
             loading: false,
             finished: true,
+            refreshing: false,
             list: [
                 {hour: 4,project: '永达智慧零售',step: '蓝图阶段',status: 0,color: '#85E085'},
                 {hour: 4,project: '强生',step: '蓝图阶段',status: 1,color: '#5894FF'},
@@ -111,6 +112,9 @@ export default {
         },
         formatWeekDay_(val) {
             return formatWeekDay(val)
+        },
+        goFillInHour() {
+            this.$router.push('/fillInHour')
         }
     },
     created() {
