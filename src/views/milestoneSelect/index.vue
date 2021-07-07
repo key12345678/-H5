@@ -1,5 +1,5 @@
 <template>
-  <div class="container projectSelect">
+  <div class="container milestoneSelect">
         <titleText :title="title">
             <div slot="back">
                 <van-icon
@@ -9,12 +9,11 @@
                 ></van-icon>
             </div>
         </titleText>
-        <div class="projectList">
+        <div class="milestoneList">
             <div 
-                class="projectItem" 
-                v-for="(item,index) in projectList" 
+                class="milestoneItem" 
+                v-for="(item,index) in milestoneList" 
                 :key="index" 
-                :style="{marginTop: item.name==='其他'?'20px':0}"
                 @click="selectItem(item,index)"
             >
                 <div :style="{color: item.selected==true?'#6DA2FF':''}">{{item.name}}</div>
@@ -35,8 +34,8 @@ export default {
     data() {
         return {
             title: '项目',
-            projectList: [
-                {name: '永达智慧零售',selected: false},{name: '强生',selected: false},{name: '帝亚一维',selected: false},{name: '其他',selected: false},{name: '假期',selected: false}
+            milestoneList: [
+                {name: '蓝图设计',selected: false},{name: '项目启动',selected: false},{name: '项目调研',selected: false},{name: '项目第一阶段',selected: false},{name: '项目第二阶段',selected: false}
             ],
             activeIndex: 0
             
@@ -46,29 +45,21 @@ export default {
         selectItem(item,index) {
             this.activeIndex = index;
             this.$set(item,'selected',!item.selected)
-            this.projectList.forEach((item,idx)=>{
+            this.milestoneList.forEach((item,idx)=>{
                 if(index!=idx) {
                     this.$set(item,'selected',false)
                 }
             })
 
-            if(item.name=='其他') {
-                sessionStorage.setItem('type','other')
-            }else if(item.name=='假期') {
-                sessionStorage.setItem('type','leave')
-            }else {
-                sessionStorage.setItem('type','commonProject')
-            }
-
-            sessionStorage.setItem('projectName',item.name)
+            sessionStorage.setItem('milestone',item.name)
             this.$router.push('/fillInHour')
         }
     },
     mounted() {
-        if(sessionStorage.getItem('projectName')) {
-            let index = this.projectList.findIndex(item=> item.name==sessionStorage.getItem('projectName'))
+        if(sessionStorage.getItem('milestone')) {
+            let index = this.milestoneList.findIndex(item=> item.name==sessionStorage.getItem('milestone'))
             if(index>-1) {
-                this.$set(this.projectList[index],'selected',true)
+                this.$set(this.milestoneList[index],'selected',true)
             }
         }
     }
@@ -76,12 +67,12 @@ export default {
 </script>
 
 <style lang="less">
-    .projectSelect {
+    .milestoneSelect {
         height:100%;
-        .projectList {
+        .milestoneList {
             width:95%;
             margin:10px auto;
-            .projectItem {
+            .milestoneItem {
                 background: #fff;
                 padding:0 10px;
                 height: 60px;

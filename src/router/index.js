@@ -43,6 +43,13 @@ const routes = [
     meta: {
       navShow: false
     }
+  },
+  {
+    path: '/milestoneSelect',
+    component: () => import('@/views/milestoneSelect/index.vue'),
+    meta: {
+      navShow: false
+    }
   }
 ]
 

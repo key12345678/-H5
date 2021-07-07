@@ -21,7 +21,7 @@
             <div class="wrapper" v-if="type==='commonProject'">
                 <div class="project" style="border-bottom:1px solid #eee">
                     <div class="text">里程碑</div>
-                    <div class="value">
+                    <div class="value" @click="toMilestoneSelect">
                         <span :style="{color: milestone==='请选择'?'#AAAAAA':''}">{{milestone}}</span>&nbsp;&nbsp;&nbsp;
                         <van-icon name="arrow" color="#AAAAAA"/>
                     </div>
@@ -121,7 +121,7 @@
                 <div class="project" style="border-bottom:1px solid #eee">
                     <div class="text">工时</div>
                     <div class="value">
-                        <van-field v-model="leaveHour" placeholder="" readonly />
+                        <van-field v-model="leaveDay" placeholder="" readonly />
                     </div>
                 </div>
                 <div class="workDesc">
@@ -210,7 +210,7 @@ export default {
             hour: 0,
             leaveHour: 0,
             desc: '',
-            type: 'leave',  //一般项目(commonProject)、其他(other)、请假(leave)
+            type: sessionStorage.getItem('type') || 'commonProject',  //一般项目(commonProject)、其他(other)、请假(leave)
             show: false,
             show2: false,
             minDate: new Date(2020, 0, 1),
@@ -223,9 +223,46 @@ export default {
             dateType: 'start'
         }
     },
+    computed: {
+        leaveDay: {
+            get() {
+                if (this.currentDate == "" && this.currentDate2 == "") {
+                    return "自动计算/最小单位0.5天";
+              } else {
+                let sdate = new Date(this.currentDate);
+                let now = new Date(this.currentDate2);
+                let days = now.getTime() - sdate.getTime();
+                let day = parseInt(days / (1000 * 60 * 60 * 24));
+                console.log(day,'day')
+                if (
+                  now == sdate ||
+                  (this.columnsValue == "上午" &&
+                    this.columnsValue2 == "上午") ||
+                  (this.columnsValue == "下午" && this.columnsValue2 == "下午")
+                ) {
+            console.log('aa')
+                  day = day + 0.5;
+                } else if (
+                  this.columnsValue == "上午" &&
+                  this.columnsValue2 == "下午"
+                ) {
+            console.log('bb')
+                  day = day + 1;
+                }
+                return day;
+              }
+            },
+            set(val) {
+                // console.log(val,'val')
+            }
+        }
+    },
     methods: {
         toProjectSelect() {
             this.$router.push('/projectSelect')
+        },
+        toMilestoneSelect() {
+            this.$router.push('/milestoneSelect')
         },
         selectStartTime() {
             this.show = true;
@@ -249,9 +286,6 @@ export default {
             // this.currentDateFormat = Date.parse(st) //???????
             this.startTime = this.currentDate +' '+ this.columnsValue;
             this.show = false;
-            if(this.currentDate2) {
-                console.log(this.leaveDay(),'QQQ')
-            }
         },
         confirm2() {
             let date = this.currentDate2;
@@ -269,9 +303,6 @@ export default {
             // this.currentDateFormat = Date.parse(st) //???????
             this.endTime = this.currentDate2 +' '+ this.columnsValue2;
             this.show2 = false;
-            if(this.currentDate) {
-                console.log(this.leaveDay(),'###')
-            }
         },
         onChange(picker, value, index) {
             this.columnsValue = value
@@ -280,32 +311,10 @@ export default {
         onChange2(picker, value, index) {
             this.columnsValue2 = value
             this.currentDate2 = new Date(this.currentDate2)
-        },
-        leaveDay() {
-          if (this.currentDate == "" && this.currentDate2 == "") {
-            return "自动计算/最小单位0.5天";
-          } else {
-            let sdate = new Date(this.currentDate);
-            let now = new Date(this.currentDate2);
-            let days = now.getTime() - sdate.getTime();
-            let day = parseInt(days / (1000 * 60 * 60 * 24));
-    //         console.log(day);
-            if (
-              now == sdate ||
-              (this.columnsValue == "上午" &&
-                this.columnsValue2 == "上午") ||
-              (this.columnsValue == "下午" && this.columnsValue2 == "下午")
-            ) {
-              day = day + 0.5;
-            } else if (
-              this.columnsValue == "上午" &&
-              this.columnsValue2 == "下午"
-            ) {
-              day = day + 1;
-            }
-            return day;
-          }
-        }
+        }
+    },
+    mounted() {
+        
     },
     created() {
         let {currentdate,weekDay} = getNowFormatDate();
