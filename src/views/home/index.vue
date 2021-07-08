@@ -75,7 +75,7 @@
         <div class="checkShowHour">
             <div class="hour_" style="border-bottom:1px solid #eee">
                 <div class="text">审核工时</div>
-                <div class="value">
+                <div class="value" @click="toAuditTime">
                     <span>5</span>&nbsp;&nbsp;&nbsp;
                     <van-icon name="arrow" />
                 </div>
@@ -168,6 +168,9 @@ export default {
       }
     },
     methods: {
+        toAuditTime() {
+            this.$router.push('/auditTime')
+        },
         chooseDate() {
             this.show = true;
         },

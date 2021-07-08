@@ -23,6 +23,20 @@ const routes = [
     }
   },
   {
+    path: '/auditTime',
+    component: () => import('@/views/auditHour/index.vue'),
+    meta: {
+      navShow: false
+    }
+  },
+  {
+    path: '/auditDetail',
+    component: () => import('@/views/auditHour/detail.vue'),
+    meta: {
+      navShow: false
+    }
+  },
+  {
     path: '/submitHour',
     component: () => import('@/views/submitHour/index.vue'),
     meta: {
