@@ -82,7 +82,7 @@
             </div>
             <div class="hour_">
                 <div class="text">查看工时</div>
-                <div class="value">
+                <div class="value" @click="toSubmitHour">
                     <span>3</span>&nbsp;&nbsp;&nbsp;
                     <van-icon name="arrow" />
                 </div>
@@ -170,6 +170,9 @@ export default {
     methods: {
         toAuditTime() {
             this.$router.push('/auditTime')
+        },
+        toSubmitHour() {
+            this.$router.push('/submitHour')
         },
         chooseDate() {
             this.show = true;
@@ -312,6 +315,7 @@ export default {
 
 <style lang="less">
     .home {
+        min-height:100%;
         // .name {
         //     height:50px;
         //     line-height:50px;
