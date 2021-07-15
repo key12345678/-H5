@@ -187,7 +187,7 @@
         </div>
 
         <div class="bottom-btns">
-            <div class="btn"><van-button type="default" block style="background:#F2F4F6">保存</van-button></div>
+            <div class="btn"><van-button type="default" block style="background:#F2F4F6;">保存</van-button></div>
             <div class="btn"><van-button type="info" block>提交</van-button></div>
         </div>
   </div>
@@ -361,12 +361,13 @@ export default {
             width:100%;
             height:50px;
             display: flex;
+            justify-content: space-around;
             align-items: center;
             position:fixed;
             bottom:0;
             left:0;
             .btn{
-                width:50%;
+                width:45%;
                 text-align: center;
             }
         }
